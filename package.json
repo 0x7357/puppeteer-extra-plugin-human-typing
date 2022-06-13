@@ -11,6 +11,7 @@
     "puppeteer",
     "puppeteer-extra",
     "puppeteer-extra-plugin",
+    "puppeteer-extra-plugin-human-typing",
     "human-typing",
     "chrome",
     "headless"

@@ -15,8 +15,6 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
     return {
       backspaceMaximumDelayInMs: 750 * 2,
       backspaceMinimumDelayInMs: 750,
-      maximumDelayInMs: 650,
-      minimumDelayInMs: 150,
       keyboardLayout: 'de',
       keyboardLayouts: {
         de: [
@@ -32,6 +30,8 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
           ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'],
         ],
       },
+      maximumDelayInMs: 650,
+      minimumDelayInMs: 150,
       typoChanceInPercent: 15,
     };
   }

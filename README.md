@@ -46,9 +46,9 @@ const HumanTypingPlugin = require('puppeteer-extra-plugin-human-typing')
 const humanTyping = HumanTypingPlugin({
   backspaceMaximumDelayInMs: 750 * 2,
   backspaceMinimumDelayInMs: 750,
+  keyboardLayout: 'de',
   maximumDelayInMs: 650,
   minimumDelayInMs: 150,
-  keyboardLayout: 'de',
   typoChanceInPercent: 15,
 })
 

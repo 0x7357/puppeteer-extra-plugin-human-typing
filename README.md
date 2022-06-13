@@ -33,7 +33,8 @@ puppeteer.launch({ headless: false }).then(async (browser) => {
   await page.setViewport({ height: 600, width: 800 });
   await page.goto('https://www.google.com');
   await page.typeHuman('[name="q"]', 'Is a robot writing right now?');
-});```
+});
+```
 
 ## Options
 

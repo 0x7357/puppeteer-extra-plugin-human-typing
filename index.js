@@ -178,8 +178,6 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
   }
 
   async _typeHuman(page, selector, text, options = {}) {
-    await this._delay(1000 * 5);
-
     await page.focus(selector);
 
     const typingFlow = this._getTypingFlow(text);

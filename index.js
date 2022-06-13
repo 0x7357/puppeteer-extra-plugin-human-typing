@@ -95,7 +95,7 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
     const _r = characterCoordinates.row;
 
     // A higher chance to select characters to the left and right, than above and below. (66%)
-    if (this._getRandomIntegerBetween(1, 100) <= 66) {
+    if (this._getRandomIntegerBetween(0, 100) <= 75) {
       possibleRows = [characterCoordinates.row];
     } else {
       if (_r === 0) {

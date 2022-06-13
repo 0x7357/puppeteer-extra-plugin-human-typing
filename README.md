@@ -2,7 +2,12 @@
 
 > A [puppeteer-extra](https://github.com/berstend/puppeteer-extra) plugin to add human typing to Puppeteer.
 
-### Installation
+## Features
+
+- gives `page` the function `.typeHuman()` which "humanizes" the writing of input elements
+- makes, up to the specified percentage chance, typos and automatically corrects them
+
+## Installation
 
 ```bash
 yarn add puppeteer-extra-plugin-human-typing
@@ -47,6 +52,20 @@ const humanTyping = HumanTypingPlugin({
   backspaceMaximumDelayInMs: 750 * 2,
   backspaceMinimumDelayInMs: 750,
   keyboardLayout: 'de',
+  keyboardLayouts: {
+    de: [
+      ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'ß'],
+      ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü'],
+      ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä'],
+      ['y', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-'],
+    ],
+    en: [
+      ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-'],
+      ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '['],
+      ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'"],
+      ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'],
+    ],
+  },
   maximumDelayInMs: 650,
   minimumDelayInMs: 150,
   typoChanceInPercent: 15,
@@ -69,7 +88,29 @@ const options = {
   minimumDelayInMs: 150,
   /** The keyboard layout. */
   keyboardLayout: 'de',
+  /** The predefined keyboard layouts. See "Keyboard Layouts" */
+  keyboardLayouts: {},
   /** The chance for a typo in percent. */
   typoChanceInPercent: 15,
 }
+```
+
+## Keyboard Layouts
+
+A keyboard layout is a multidimensional array, built like a real keyboard. I intentionally left out some characters because I suspect that these characters are used less frequently. It is therefore important that it is set up like a real keyboard so that a suitable/correct selection can be made for "typos".
+
+```js
+const customKeyboardLayout = [
+  ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-'],
+  ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '['],
+  ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'"],
+  ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'],
+];
+
+const humanTyping = HumanTypingPlugin({
+  keyboardLayout: 'custom',
+  keyboardLayouts: {
+    custom: customKeyboardLayout,
+  },
+});
 ```

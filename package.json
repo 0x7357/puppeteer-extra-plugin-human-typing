@@ -1,0 +1,29 @@
+{
+  "author": "dannyendert",
+  "dependencies": {
+    "puppeteer-extra-plugin": "^3.2.0"
+  },
+  "description": "",
+  "devDependencies": {
+    "puppeteer": "^14.3.0"
+  },
+  "keywords": [
+    "puppeteer",
+    "puppeteer-extra",
+    "puppeteer-extra-plugin",
+    "human-typing",
+    "chrome",
+    "headless"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "puppeteer-extra-plugin-human-typing",
+  "repository": "dannyendert/puppeteer-extra-plugin-human-typing",
+  "scripts": {
+    "docs": "node -e 0",
+    "lint": "eslint --ext .js .",
+    "test": "run-p lint",
+    "test-ci": "run-s test"
+  },
+  "version": "1.0.0"
+}

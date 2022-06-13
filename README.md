@@ -25,7 +25,7 @@ The plugin adds human typing to Puppeteer.
 ```javascript
 const puppeteer = require('puppeteer-extra');
 
-puppeteer.use(require('./PuppeteerExtraPluginHumanTyping.js')());
+puppeteer.use(require('puppeteer-extra-plugin-human-typing')());
 
 puppeteer.launch({ headless: false }).then(async (browser) => {
   const page = await browser.newPage();

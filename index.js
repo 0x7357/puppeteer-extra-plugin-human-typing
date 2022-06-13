@@ -125,6 +125,7 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
       return character;
     }
 
+    // If we accidentally get the same character, we try again (but no more than 5 times).
     if (result === characterLowerCased) {
       return this._getCharacterCloseTo(character, attempt + 1);
     }

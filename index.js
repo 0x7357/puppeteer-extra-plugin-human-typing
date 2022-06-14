@@ -138,8 +138,6 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
   }
 
   _getTypingFlow(text) {
-    console.log(this.defaults);
-
     const typingFlow = [];
 
     const characters = text.split('');

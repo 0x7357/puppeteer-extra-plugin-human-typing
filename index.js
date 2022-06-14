@@ -1,5 +1,7 @@
 const { PuppeteerExtraPlugin } = require('puppeteer-extra-plugin');
 
+const BACKSPACE = 'Backspace';
+
 class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
   constructor(options = {}) {
     super(options);
@@ -150,7 +152,7 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
 
       if (hasTypo) {
         typingFlow.push(this._getCharacterCloseTo(character));
-        typingFlow.push('Backspace');
+        typingFlow.push(BACKSPACE);
       }
 
       typingFlow.push(character);
@@ -181,7 +183,7 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
     const minimumDelayInMs = options.minimumDelayInMs || this.opts.minimumDelayInMs;
 
     for (const character of typingFlow) {
-      if (character.length === 1) {
+      if (character === BACKSPACE) {
         await this._delay(this._getRandomIntegerBetween(minimumDelayInMs, maximumDelayInMs));
 
         await page.keyboard.type(character, { delay: this._getRandomIntegerBetween(50, 300) });

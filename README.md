@@ -89,14 +89,14 @@ const options = {
   backspaceMaximumDelayInMs: 750 * 2,
   /** The minimum delay before hitting the Backspace-button. */
   backspaceMinimumDelayInMs: 750,
-  /** The maximum delay before typing a character. */
-  maximumDelayInMs: 650,
-  /** The minimum delay before typing a character. */
-  minimumDelayInMs: 150,
   /** The keyboard layout. */
   keyboardLayout: 'de',
   /** The predefined keyboard layouts. See "Keyboard Layouts" */
   keyboardLayouts: {},
+  /** The maximum delay before typing a character. */
+  maximumDelayInMs: 650,
+  /** The minimum delay before typing a character. */
+  minimumDelayInMs: 150,
   /** The chance for a typo in percent. */
   typoChanceInPercent: 15,
 }

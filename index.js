@@ -148,6 +148,13 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
       const character = characters[i];
       const characterLowerCased = character.toLowerCase();
 
+      /** We take one third of "typoChanceInPercent" to write a space twice. However, we will not remove this one. */
+      const hasSpaceTypo = character === ' ' && this._getRandomIntegerBetween(0, 100) <= this.opts.typoChanceInPercent / 3;
+
+      if (hasSpaceTypo) {
+        typingFlow.push(' ');
+      }
+
       const hasTypo = this._isInKeyboardLayout(characterLowerCased) && this._getRandomIntegerBetween(0, 100) <= this.opts.typoChanceInPercent;
 
       if (hasTypo) {

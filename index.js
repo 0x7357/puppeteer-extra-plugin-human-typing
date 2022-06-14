@@ -96,7 +96,7 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
     const _c = characterCoordinates.column;
     const _r = characterCoordinates.row;
 
-    // A higher chance to select characters to the left and right, than above and below. (75%)
+    /** A higher chance to select characters to the left and right, than above and below. (75%) */
     if (this._getRandomIntegerBetween(0, 100) <= 75) {
       possibleRows = [characterCoordinates.row];
     } else {
@@ -122,12 +122,12 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
 
     const result = this.keyboardLayout[selectedRow][selectedColumn] ?? null;
 
-    // This can happen because each line ("row") must not have the same length/number of letters ("columns").
+    /** This can happen because each line ("row") must not have the same length/number of letters ("columns"). */
     if (result === null) {
       return character;
     }
 
-    // If we accidentally get the same character, we try again (but no more than 5 times).
+    /** If we accidentally get the same character, we try again (but no more than 5 times). */
     if (result === characterLowerCased) {
       return this._getCharacterCloseTo(character, attempt + 1);
     }
@@ -156,6 +156,14 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
       }
 
       typingFlow.push(character);
+
+      /** We take half of "typoChanceInPercent" to write a character twice. */
+      const hasDoubleCharacterTypo = this._isInKeyboardLayout(characterLowerCased) && this._getRandomIntegerBetween(0, 100) <= this.opts.typoChanceInPercent / 2;
+
+      if (hasDoubleCharacterTypo) {
+        typingFlow.push(character);
+        typingFlow.push(BACKSPACE);
+      }
     }
 
     return typingFlow;

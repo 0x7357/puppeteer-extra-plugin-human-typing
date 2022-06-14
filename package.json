@@ -1,5 +1,5 @@
 {
-  "author": "dannyendert",
+  "author": "0x7357",
   "dependencies": {
     "puppeteer-extra-plugin": "^3.2.0"
   },
@@ -19,7 +19,7 @@
   "license": "MIT",
   "main": "index.js",
   "name": "puppeteer-extra-plugin-human-typing",
-  "repository": "dannyendert/puppeteer-extra-plugin-human-typing",
+  "repository": "0x7357/puppeteer-extra-plugin-human-typing",
   "scripts": {
     "docs": "node -e 0",
     "lint": "eslint --ext .js .",

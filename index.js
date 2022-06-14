@@ -146,13 +146,7 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
       const character = characters[i];
       const characterLowerCased = character.toLowerCase();
 
-      if (!this._isInKeyboardLayout(characterLowerCased)) {
-        typingFlow.push(character);
-
-        continue;
-      }
-
-      let hasTypo = this._getRandomIntegerBetween(0, 100) <= this.opts.typoChanceInPercent;
+      const hasTypo = this._isInKeyboardLayout(characterLowerCased) && this._getRandomIntegerBetween(0, 100) <= this.opts.typoChanceInPercent;
 
       if (hasTypo) {
         typingFlow.push(this._getCharacterCloseTo(character));

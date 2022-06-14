@@ -180,16 +180,22 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
 
     const typingFlow = this._getTypingFlow(text);
 
+    const backspaceMaximumDelayInMs = options.backspaceMaximumDelayInMs || this.opts.backspaceMinimumDelayInMs;
+    const backspaceMinimumDelayInMs = options.backspaceMinimumDelayInMs || this.opts.backspaceMinimumDelayInMs;
+
+    const maximumDelayInMs = options.maximumDelayInMs || this.opts.maximumDelayInMs;
+    const minimumDelayInMs = options.minimumDelayInMs || this.opts.minimumDelayInMs;
+
     for (const character of typingFlow) {
       if (character.length === 1) {
-        await page.keyboard.type(character);
+        await this._delay(this._getRandomIntegerBetween(minimumDelayInMs, maximumDelayInMs));
+
+        await page.keyboard.type(character, { delay: this._getRandomIntegerBetween(50, 300) });
       } else {
-        await this._delay(this._getRandomIntegerBetween(this.opts.backspaceMinimumDelayInMs, this.opts.backspaceMaximumDelayInMs));
+        await this._delay(this._getRandomIntegerBetween(backspaceMinimumDelayInMs, backspaceMaximumDelayInMs));
 
-        await page.keyboard.press(character);
+        await page.keyboard.press(character, { delay: this._getRandomIntegerBetween(50, 300) });
       }
-
-      await this._delay(this._getRandomIntegerBetween(this.opts.minimumDelayInMs, this.opts.maximumDelayInMs));
     }
   }
 

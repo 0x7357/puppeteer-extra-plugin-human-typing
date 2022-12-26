@@ -1,35 +1,36 @@
-const { PuppeteerExtraPlugin } = require('puppeteer-extra-plugin');
+const { PuppeteerExtraPlugin } = require("puppeteer-extra-plugin");
 
-const BACKSPACE = 'Backspace';
+const BACKSPACE = "Backspace";
 
 class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
   constructor(options = {}) {
     super(options);
 
-    this.keyboardLayout = this.opts.keyboardLayouts[this.opts.keyboardLayout || 'en'];
+    this.keyboardLayout = this.opts.keyboardLayouts[this.opts.keyboardLayout || "en"];
   }
 
   get name() {
-    return 'human-typing';
+    return "human-typing";
   }
 
   get defaults() {
     return {
       backspaceMaximumDelayInMs: 750 * 2,
       backspaceMinimumDelayInMs: 750,
-      keyboardLayout: 'de',
+      chanceToKeepATypoInPercent: 0,
+      keyboardLayout: "de",
       keyboardLayouts: {
         de: [
-          ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'ß'],
-          ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü'],
-          ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä'],
-          ['y', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-'],
+          ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "ß"],
+          ["q", "w", "e", "r", "t", "z", "u", "i", "o", "p", "ü"],
+          ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ö", "ä"],
+          ["y", "x", "c", "v", "b", "n", "m", ",", ".", "-"],
         ],
         en: [
-          ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-'],
-          ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '['],
-          ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'"],
-          ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'],
+          ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-"],
+          ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "["],
+          ["a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'"],
+          ["z", "x", "c", "v", "b", "n", "m", ",", ".", "/"],
         ],
       },
       maximumDelayInMs: 650,
@@ -142,17 +143,17 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
   _getTypingFlow(text) {
     const typingFlow = [];
 
-    const characters = text.split('');
+    const characters = text.split("");
 
     for (let i = 0; i < characters.length; i++) {
       const character = characters[i];
       const characterLowerCased = character.toLowerCase();
 
       /** We take one third of "typoChanceInPercent" to write a space twice. However, we will not remove this one. */
-      const hasSpaceTypo = character === ' ' && this._getRandomIntegerBetween(0, 100) <= this.opts.typoChanceInPercent / 3;
+      const hasSpaceTypo = character === " " && this._getRandomIntegerBetween(0, 100) <= this.opts.typoChanceInPercent / 3;
 
       if (hasSpaceTypo) {
-        typingFlow.push(' ');
+        typingFlow.push(" ");
       }
 
       const hasTypo = this._isInKeyboardLayout(characterLowerCased) && this._getRandomIntegerBetween(0, 100) <= this.opts.typoChanceInPercent;
@@ -199,13 +200,21 @@ class PuppeteerExtraPluginHumanTyping extends PuppeteerExtraPlugin {
 
     for (const character of typingFlow) {
       if (character === BACKSPACE) {
-        await this._delay(this._getRandomIntegerBetween(minimumDelayInMs, maximumDelayInMs));
+        if (this._getRandomIntegerBetween(0, 100) > this.options.chanceToKeepATypoInPercent) {
+          continue;
+        }
 
-        await page.keyboard.type(character, { delay: this._getRandomIntegerBetween(50, 300) });
-      } else {
         await this._delay(this._getRandomIntegerBetween(backspaceMinimumDelayInMs, backspaceMaximumDelayInMs));
 
-        await page.keyboard.press(character, { delay: this._getRandomIntegerBetween(50, 300) });
+        await page.keyboard.press(character, {
+          delay: this._getRandomIntegerBetween(50, 300),
+        });
+      } else {
+        await this._delay(this._getRandomIntegerBetween(minimumDelayInMs, maximumDelayInMs));
+
+        await page.keyboard.press(character, {
+          delay: this._getRandomIntegerBetween(50, 300),
+        });
       }
     }
   }
